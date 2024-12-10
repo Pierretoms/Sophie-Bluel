@@ -125,6 +125,29 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/*A CHANGER POUR LA PAGE EDITION*/
+
+.ajout {
+	display: flex;
+	justify-content: center;
+	margin-left: 100px;
+}
+
+.ajout h2 {
+	margin-right: 30px;
+}
+
+.ajout p {
+	opacity: 0;
+}
+
+.fa-pen-to-square {
+	font-size: 15px; 
+	margin-right: 10px;
+	opacity: 0;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
