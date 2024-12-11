@@ -129,6 +129,7 @@ li:hover {
 /*A CHANGER POUR LA PAGE EDITION*/
 
 .ajout {
+	height: 30px;
 	display: flex;
 	justify-content: center;
 	margin-left: 100px;
@@ -146,6 +147,28 @@ li:hover {
 	font-size: 15px; 
 	margin-right: 10px;
 	opacity: 0;
+}
+
+.div-filtres {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+	padding: 30px;
+}
+
+.div-filtres > * {
+	padding: 6px 20px;
+	border: 1px solid#1D6154;
+	border-radius: 25px;
+	font-family: 'syne';
+	cursor: pointer;
+	color: #1D6154;
+}
+
+.div-filtres > *:hover {
+	background-color: #1D6154;
+	color: white;
 }
 
 .gallery {
