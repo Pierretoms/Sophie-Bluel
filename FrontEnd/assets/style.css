@@ -52,6 +52,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -95,9 +96,16 @@ nav li {
 	font-size: 1.2em;
 }
 
+nav a {
+	text-decoration: none;
+	color: black;
+}
+
 li:hover {
 	color: #B1663C;
 }
+
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -209,10 +217,17 @@ margin: auto;
 }
 #contact label {
 	margin: 2em 0 1em 0;
+	color: #3D3D3D;
 }
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.password_forget {
+	text-decoration: underline;
+	font-size: 16px;
+	color: #3D3D3D;
 }
 
 input[type="submit"]{
@@ -226,9 +241,44 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+#login {
+	width: 50%;
+margin: auto;
+}
+#login > * {
+	text-align: center;
+
+}
+#login h2{
+	margin-bottom: 20px;
+}
+#login form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login label {
+	margin: 2em 0 1em 0;
+	color: #3D3D3D;
+}
+#login textarea {
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
+	background-color: white;
+	box-shadow: 0 0 0 2em white;
 }
 

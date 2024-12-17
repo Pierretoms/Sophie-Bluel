@@ -1,53 +1,59 @@
-async function getWorks() {
+// Fonction pour charger toutes les œuvres au démarrage
+async function loadAllWorks() {
     const url = "http://localhost:5678/api/works";
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
-        }
-        
-        const json = await response.json();
-        console.log(json);
-        for(let i = 0; i < json.length; i++) {
-            setFigure(json[i])
-        }
-    } catch (error) {
-        console.error(error.message);
-    }
-}
-getWorks();
+    const response = await fetch(url);
+    const works = await response.json();
+    const gallery = document.querySelector(".gallery");
 
-function setFigure(data) {
-    const figure = document.createElement("figure")
-    figure.innerHTML = `<img src=${data.imageUrl} alt=${data.title}>
-				<figcaption>${data.title}</figcaption>`;
-    
-    document.querySelector(".gallery").append (figure);
+    works.forEach(work => {
+        const figure = document.createElement("figure");
+        figure.dataset.categoryId = work.categoryId;
+        figure.innerHTML = `
+            <img src="${work.imageUrl}" alt="${work.title}">
+            <figcaption>${work.title}</figcaption>
+        `;
+        gallery.appendChild(figure);
+    });
 }
 
-// http://localhost:5678/api/categories
+// Fonction pour filtrer les œuvres
+function filterWorks(categoryId) {
+    const figures = document.querySelectorAll(".gallery figure");
+    figures.forEach(figure => {
+        if (categoryId === null || figure.dataset.categoryId === categoryId.toString()) {
+            figure.style.display = "block";
+        } else {
+            figure.style.display = "none";
+        }
+    });
+}
 
-async function getCategories() {
+// Fonction pour créer les boutons de filtrage
+async function createFilterButtons() {
     const url = "http://localhost:5678/api/categories";
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
-        }
-        
-        const json = await response.json();
-        console.log(json);
-        for(let i = 0; i < json.length; i++) {
-            setFiltres(json[i])
-        }
-    } catch (error) {
-        console.error(error.message);
-    }
-}
-getCategories();
+    const response = await fetch(url);
+    const categories = await response.json();
+    const filterContainer = document.querySelector(".div-filtres");
+    
+    // Bouton "Tous"
+    const allButton = document.createElement("div");
+    allButton.textContent = "Tous";
+    allButton.addEventListener("click", () => filterWorks(null));
+    filterContainer.appendChild(allButton);
 
-function setFiltres(data) { 
-    const div = document.createElement("div");
-    div.innerHTML = `${data.name}`;
-    document.querySelector(".div-filtres").append (div);
+    // Boutons pour chaque catégorie
+    categories.forEach(category => {
+        const button = document.createElement("div");
+        button.textContent = category.name;
+        button.addEventListener("click", () => filterWorks(category.id));
+        filterContainer.appendChild(button);
+    });
 }
+
+// Initialisation
+async function init() {
+    await loadAllWorks();
+    await createFilterButtons();
+}
+
+init();
