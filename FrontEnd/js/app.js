@@ -4,7 +4,7 @@ async function loadAllWorks() {
     const response = await fetch(url);
     const works = await response.json();
     const gallery = document.querySelector(".gallery");
-
+    
     works.forEach(work => {
         const figure = document.createElement("figure");
         figure.dataset.categoryId = work.categoryId;
@@ -40,7 +40,7 @@ async function createFilterButtons() {
     allButton.textContent = "Tous";
     allButton.addEventListener("click", () => filterWorks(null));
     filterContainer.appendChild(allButton);
-
+    
     // Boutons pour chaque catégorie
     categories.forEach(category => {
         const button = document.createElement("div");
@@ -57,3 +57,15 @@ async function init() {
 }
 
 init();
+
+function modeEdition() {
+    if (sessionStorage.authToken) {
+        console.log("ok");
+        const banniereEdit = document.createElement("div")
+        banniereEdit.className = 'mode-edit'
+        banniereEdit.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>'
+        document.body.prepend(banniereEdit)
+    } 
+}
+
+modeEdition()
