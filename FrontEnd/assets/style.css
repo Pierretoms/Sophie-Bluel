@@ -3,6 +3,10 @@
    License: none (public domain)
 */
 
+* {
+	box-sizing: border-box;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -158,6 +162,27 @@ li:hover {
 
 /*A CHANGER POUR LA PAGE EDITION*/
 
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal-wrapper {
+	background-color: white;
+	width: 600px;
+	max-width: calc(100vh - 20px);
+	max-height: calc(100vh - 20px);
+	padding: 20px;
+	overflow: auto;
+}
+
 .ajout {
 	height: 30px;
 	display: flex;
@@ -169,14 +194,22 @@ li:hover {
 	margin-right: 30px;
 }
 
-.ajout p {
-	opacity: 0;
+.ajout a {
+	opacity: 1;
+	margin-top: 10px;
+	text-decoration: none;
+	color: black;
 }
 
 .ajout .fa-pen-to-square {
 	font-size: 15px; 
 	margin-right: 10px;
-	opacity: 0;
+	opacity: 1;
+	margin-top: 10px;
+}
+
+*:focus {
+	box-shadow: 0 0 10px blue;
 }
 
 .div-filtres {
