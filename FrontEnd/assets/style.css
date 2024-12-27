@@ -1,6 +1,6 @@
 /* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
+v2.0 | 20110126
+License: none (public domain)
 */
 
 * {
@@ -102,7 +102,7 @@ h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
+	;
 }
 
 h2{
@@ -111,11 +111,23 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
+h3 {
+	text-align: center;
+	font-family: 'Work Sans';
+	font-size: 18px;
+	margin: 20px;
+}
+
+hr {
+	margin: 50px 0 10px 0;
+}
+
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
+	
 }
 nav li {
 	padding: 0 10px;
@@ -168,7 +180,7 @@ li:hover {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0.8);
+	background: rgba(0, 0, 0, 0.6);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -181,6 +193,38 @@ li:hover {
 	max-height: calc(100vh - 20px);
 	padding: 20px;
 	overflow: auto;
+}
+
+.modal-close-container {
+	display: flex;
+	justify-content: end;
+}
+
+.js-modal-close {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+.btn-add-photo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn-add-photo button {
+	font-family: 'Syne';
+	font-weight: 700;
+	background-color: #1D6154;
+	color: white;
+	margin : 2em auto ;
+	width: 280px;
+	text-align: center;
+	border-radius: 60px ;
+	height: 40px;
+	cursor: pointer;
+	border: none;
 }
 
 .ajout {
@@ -234,6 +278,39 @@ li:hover {
 	color: white;
 }
 
+.gallery-modal {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+}
+
+.gallery-modal img {
+	width: 100%;
+}
+
+.gallery-modal figure {
+	position: relative;
+}
+
+figure button {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	background-color: black;
+	color: white;
+	display: grid;
+	place-items: center;
+	width: 19px;
+	aspect-ratio: 1 / 1;
+	border: none;
+	cursor: pointer;
+	font-size: 11px;
+	padding: 0;
+	border-radius: 2px;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -244,15 +321,15 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
+
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
-
+	
 }
 #contact h2{
 	margin-bottom: 20px;
@@ -298,11 +375,11 @@ input[type="submit"]{
 
 #login {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #login > * {
 	text-align: center;
-
+	
 }
 #login h2{
 	margin-bottom: 20px;

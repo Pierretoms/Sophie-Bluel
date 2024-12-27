@@ -4,6 +4,7 @@ async function loadAllWorks() {
     const response = await fetch(url);
     const works = await response.json();
     const gallery = document.querySelector(".gallery");
+    const galleryModal = document.querySelector(".gallery-modal");
     
     works.forEach(work => {
         const figure = document.createElement("figure");
@@ -13,6 +14,15 @@ async function loadAllWorks() {
             <figcaption>${work.title}</figcaption>
         `;
         gallery.appendChild(figure);
+        
+        const figureModal = document.createElement("figure");
+        figureModal.dataset.categoryId = work.categoryId;
+        figureModal.innerHTML = `
+                <img src="${work.imageUrl}" alt="${work.title}">
+                <figcaption>${work.title}</figcaption>
+                <button><i class="fa-solid fa-trash-can"></i></button>
+            `;
+        galleryModal.appendChild(figureModal);
     });
 }
 
@@ -59,16 +69,54 @@ async function init() {
 init();
 
 function modeEdition() {
+    const loginButton = document.querySelector('a[href="login.html"]');
+    const logoutButton = document.querySelector('a[href="index.html"]');
+    const editIcon = document.querySelector('.fa-pen-to-square');
+    const editLink = document.querySelector('.js-modal');
+    const modalAside = document.querySelector('#modal1');
+
     if (sessionStorage.authToken) {
-        console.log("ok");
+        // Mode édition activé
+        console.log("Mode édition activé");
+
+        // Affichage de la bannière d'édition
         const banniereEdit = document.createElement("div");
-        banniereEdit.className = 'mode-edit';
+        banniereEdit.className = "mode-edit";
         banniereEdit.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>';
         document.body.prepend(banniereEdit);
-    } 
+
+        // Afficher "Logout" et cacher "Login"
+        loginButton.style.display = "none";
+        loginButton.style.position = "absolute";
+        logoutButton.style.display = "inline";
+
+        // Afficher les éléments d'édition
+        editIcon.style.display = "inline";
+        editLink.style.display = "inline";
+
+        // Ajouter un gestionnaire d'événement au bouton "Logout"
+        logoutButton.addEventListener("click", () => {
+            sessionStorage.clear(); // Supprimer le token
+            location.reload(); // Rafraîchir la page
+        });
+    } else {
+        // Mode normal activé
+        console.log("Mode normal activé");
+
+        // Afficher "Login" et cacher "Logout"
+        logoutButton.style.display = "none";
+        logoutButton.style.position = "absolute";
+        loginButton.style.display = "inline";
+
+        // Masquer les éléments d'édition
+        editIcon.style.display = "none";
+        editLink.style.display = "none";
+        modalAside.style.display = "none";
+    }
 }
 
-modeEdition()
+// Appeler la fonction au chargement de la page
+document.addEventListener("DOMContentLoaded", modeEdition);
 
 let modal = null;
 const focusableSelector = 'button, a, input, textarea';
@@ -85,7 +133,7 @@ const openModal = function (e) {
     modal.addEventListener('click', closeModal);
     modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
-
+    
 };
 
 const closeModal = function (e) {
