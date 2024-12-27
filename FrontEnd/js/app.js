@@ -20,10 +20,40 @@ async function loadAllWorks() {
         figureModal.innerHTML = `
                 <img src="${work.imageUrl}" alt="${work.title}">
                 <figcaption>${work.title}</figcaption>
-                <button><i class="fa-solid fa-trash-can"></i></button>
+                <button><i id="${work.id}" class="fa-solid fa-trash-can"></i></button>
             `;
         galleryModal.appendChild(figureModal);
+        
+        // Delete gallery
+        
+        const trashIcon = figureModal.querySelectorAll('.fa-trash-can');
+        console.log(trashIcon);
+        trashIcon.forEach((e) => e.addEventListener('click', (event) => deleteWorks(event)));
     });
+}
+
+async function deleteWorks(event) {
+    const id = event.srcElement.id;
+    const deleteApi = "http://localhost:5678/api/works/";
+    const token = sessionStorage.authToken;
+
+    let response = await fetch(deleteApi + id, {
+        method: 'DELETE',
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    });
+    if (response.status == 401 || response.status == 500) {
+        if (!document.querySelector('.error-login')){
+            const errorCard = document.createElement("div");
+            errorCard.className = "error-login";
+            errorCard.innerHTML = "Il y a eu une erreur";
+            document.querySelector(".btn-add-photo").prepend(errorCard);
+        }
+    } else {
+        let result = await response.json();
+        console.log(result);
+    }
 }
 
 // Fonction pour filtrer les œuvres
@@ -74,26 +104,26 @@ function modeEdition() {
     const editIcon = document.querySelector('.fa-pen-to-square');
     const editLink = document.querySelector('.js-modal');
     const modalAside = document.querySelector('#modal1');
-
+    
     if (sessionStorage.authToken) {
         // Mode édition activé
         console.log("Mode édition activé");
-
+        
         // Affichage de la bannière d'édition
         const banniereEdit = document.createElement("div");
         banniereEdit.className = "mode-edit";
         banniereEdit.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>';
         document.body.prepend(banniereEdit);
-
+        
         // Afficher "Logout" et cacher "Login"
         loginButton.style.display = "none";
         loginButton.style.position = "absolute";
         logoutButton.style.display = "inline";
-
+        
         // Afficher les éléments d'édition
         editIcon.style.display = "inline";
         editLink.style.display = "inline";
-
+        
         // Ajouter un gestionnaire d'événement au bouton "Logout"
         logoutButton.addEventListener("click", () => {
             sessionStorage.clear(); // Supprimer le token
@@ -102,12 +132,12 @@ function modeEdition() {
     } else {
         // Mode normal activé
         console.log("Mode normal activé");
-
+        
         // Afficher "Login" et cacher "Logout"
         logoutButton.style.display = "none";
         logoutButton.style.position = "absolute";
         loginButton.style.display = "inline";
-
+        
         // Masquer les éléments d'édition
         editIcon.style.display = "none";
         editLink.style.display = "none";
