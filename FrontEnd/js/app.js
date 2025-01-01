@@ -36,7 +36,7 @@ async function deleteWorks(event) {
     const id = event.srcElement.id;
     const deleteApi = "http://localhost:5678/api/works/";
     const token = sessionStorage.authToken;
-
+    
     let response = await fetch(deleteApi + id, {
         method: 'DELETE',
         headers: {
@@ -162,6 +162,7 @@ const openModal = function (e) {
     modal.setAttribute('aria-modal', 'true');
     modal.addEventListener('click', closeModal);
     modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
+    modal.querySelectorAll('.js-modal-close').forEach(e => e.addEventListener('click', closeModal));
     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
     
 };
@@ -212,3 +213,37 @@ window.addEventListener('keydown', function (e){
 document.querySelectorAll('.js-modal').forEach((a) => {
     a.addEventListener('click' , openModal);
 });
+
+// transition modal 1 --> modal 2
+
+const btnAddPhoto = document.querySelector('.btn-add-photo');
+const backBtn = document.querySelector('.js-modal-back');
+const closeBtns = document.querySelectorAll('.js-modal-close'); // Boutons de fermeture
+
+btnAddPhoto.addEventListener('click', switchModal);
+backBtn.addEventListener('click', switchModal);
+closeBtns.forEach(btn => btn.addEventListener('click', resetModals));
+
+function switchModal() {
+    const modalSupp = document.querySelector('.modal-supp-gallery');
+    const modalAdd = document.querySelector('.modal-add-gallery');
+
+    if (modalSupp.style.display === "block" || modalSupp.style.display === "") {
+        modalSupp.style.display = "none";
+        modalAdd.style.display = "block";
+    } else {
+        modalSupp.style.display = "block";
+        modalAdd.style.display = "none";
+    }
+}
+
+function resetModals() {
+    const modalSupp = document.querySelector('.modal-supp-gallery');
+    const modalAdd = document.querySelector('.modal-add-gallery');
+
+    // Réinitialiser les états des modals
+    modalSupp.style.display = "block";
+    modalAdd.style.display = "none";
+}
+
+

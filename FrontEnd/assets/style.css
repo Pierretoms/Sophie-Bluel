@@ -207,6 +207,18 @@ li:hover {
 	font-size: 18px;
 }
 
+.modal-back-container {
+	display: flex;
+	justify-content: start;
+}
+
+.js-modal-back {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	font-size: 18px;
+}
+
 .btn-add-photo {
 	display: flex;
 	align-items: center;
@@ -226,6 +238,27 @@ li:hover {
 	cursor: pointer;
 	border: none;
 }
+
+.btn-ok-photo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn-ok-photo button {
+	font-family: 'Syne';
+	font-weight: 700;
+	background-color: #1D6154;
+	color: white;
+	margin : 2em auto ;
+	width: 280px;
+	text-align: center;
+	border-radius: 60px ;
+	height: 40px;
+	cursor: pointer;
+	border: none;
+}
+
 
 .ajout {
 	height: 30px;
@@ -323,35 +356,35 @@ figure button {
 	width: 100%;
 }
 
-#contact {
+.ticket {
 	width: 50%;
 	margin: auto;
 }
-#contact > * {
+.ticket > * {
 	text-align: center;
 	
 }
-#contact h2{
+.ticket h2{
 	margin-bottom: 20px;
 }
-#contact form {
+.ticket form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+.ticket input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+.ticket label {
 	margin: 2em 0 1em 0;
 	color: #3D3D3D;
 }
-#contact textarea {
+.ticket textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -371,39 +404,7 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
-}
-
-#login {
-	width: 50%;
-	margin: auto;
-}
-#login > * {
-	text-align: center;
-	
-}
-#login h2{
-	margin-bottom: 20px;
-}
-#login form {
-	text-align: left;
-	margin-top:30px;
-	display: flex;
-	flex-direction: column;
-}
-
-#login input {
-	height: 50px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-#login label {
-	margin: 2em 0 1em 0;
-	color: #3D3D3D;
-}
-#login textarea {
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	cursor: pointer;
 }
 
 .error-login {
@@ -415,6 +416,10 @@ input[type="submit"]{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.add-photo-ticket {
+	width: 80%;
 }
 
 footer nav ul {
