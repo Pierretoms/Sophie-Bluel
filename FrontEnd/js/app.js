@@ -5,10 +5,11 @@ async function loadAllWorks() {
     const works = await response.json();
     const gallery = document.querySelector(".gallery");
     const galleryModal = document.querySelector(".gallery-modal");
-    
+
     works.forEach(work => {
         const figure = document.createElement("figure");
         figure.dataset.categoryId = work.categoryId;
+        figure.dataset.projetId = work.id;
         figure.innerHTML = `
             <img src="${work.imageUrl}" alt="${work.title}">
             <figcaption>${work.title}</figcaption>
@@ -17,42 +18,36 @@ async function loadAllWorks() {
         
         const figureModal = document.createElement("figure");
         figureModal.dataset.categoryId = work.categoryId;
+        figureModal.dataset.projetId = work.id;
         figureModal.innerHTML = `
                 <img src="${work.imageUrl}" alt="${work.title}">
                 <figcaption>${work.title}</figcaption>
-                <button><i id="${work.id}" class="fa-solid fa-trash-can"></i></button>
+                <button id="${work.id}" class="supp-projet"><i class="fa-solid fa-trash-can"></i></button>
             `;
         galleryModal.appendChild(figureModal);
         
         // Delete gallery
         
-        const trashIcon = figureModal.querySelectorAll('.fa-trash-can');
-        console.log(trashIcon);
-        trashIcon.forEach((e) => e.addEventListener('click', (event) => deleteWorks(event)));
+        const trashIcon = figureModal.querySelectorAll('.supp-projet');
+        trashIcon.forEach((button) => button.addEventListener('click', (event) => deleteWorks(event, button.id)));
     });
 }
 
-async function deleteWorks(event) {
-    const id = event.srcElement.id;
+async function deleteWorks(event, id) {
+    event.preventDefault();
     const deleteApi = "http://localhost:5678/api/works/";
-    const token = sessionStorage.authToken;
     
-    let response = await fetch(deleteApi + id, {
+    const response = await fetch(deleteApi + id, {
         method: 'DELETE',
         headers: {
-            Authorization: "Bearer " + token,
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
         },
     });
-    if (response.status == 401 || response.status == 500) {
-        if (!document.querySelector('.error-login')){
-            const errorCard = document.createElement("div");
-            errorCard.className = "error-login";
-            errorCard.innerHTML = "Il y a eu une erreur";
-            document.querySelector(".btn-add-photo").prepend(errorCard);
-        }
-    } else {
-        let result = await response.json();
-        console.log(result);
+
+    if (response.ok){
+        document.querySelectorAll(`[data-projet-id="${id}"]`).forEach((aSupprimer)=> {
+            aSupprimer.remove();
+        })
     }
 }
 
@@ -158,8 +153,6 @@ const openModal = function (e) {
     focusables = Array.from(modal.querySelectorAll(focusableSelector));
     focusables[0].focus();
     modal.style.display = null;
-    modal.removeAttribute('aria-hidden');
-    modal.setAttribute('aria-modal', 'true');
     modal.addEventListener('click', closeModal);
     modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
     modal.querySelectorAll('.js-modal-close').forEach(e => e.addEventListener('click', closeModal));
@@ -171,8 +164,6 @@ const closeModal = function (e) {
     if (modal === null) return
     e.preventDefault();
     modal.style.display = "none";
-    modal.setAttribute('aria-hidden', 'true');
-    modal.removeAttribute('aria-modal');
     modal.addEventListener('click', closeModal);
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
@@ -218,7 +209,7 @@ document.querySelectorAll('.js-modal').forEach((a) => {
 
 const btnAddPhoto = document.querySelector('.btn-add-photo');
 const backBtn = document.querySelector('.js-modal-back');
-const closeBtns = document.querySelectorAll('.js-modal-close'); // Boutons de fermeture
+const closeBtns = document.querySelectorAll('.js-modal-close');
 
 btnAddPhoto.addEventListener('click', switchModal);
 backBtn.addEventListener('click', switchModal);
@@ -241,9 +232,35 @@ function resetModals() {
     const modalSupp = document.querySelector('.modal-supp-gallery');
     const modalAdd = document.querySelector('.modal-add-gallery');
 
-    // Réinitialiser les états des modals
+    // Réinitialise les états des modals
     modalSupp.style.display = "block";
     modalAdd.style.display = "none";
 }
+
+// Apparition photo dans la modal
+
+document.getElementById("file").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.alt = "Uploaded Photo";
+            img.style.height = "214px"; // Conserve les proportions
+            img.style.margin = "auto";
+            img.style.objectFit = "contain";
+            document.getElementById("container-photo").appendChild(img);
+
+            // Masquer les éléments spécifiques après le chargement de l'image
+            document.querySelectorAll(".container-add-photo > div:not(#container-photo), .container-add-photo > label, .container-add-photo > input, .container-add-photo > p").forEach(element => {
+                element.style.display = "none";
+            });
+        };
+        reader.readAsDataURL(file);
+    } else {
+        alert("Veuillez sélectionner une image au format JPG ou PNG.");
+    }
+});
 
 

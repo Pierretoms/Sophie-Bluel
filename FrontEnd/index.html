@@ -42,7 +42,7 @@
 				<h2>Mes Projets</h2>
 				<i class="fa-regular fa-pen-to-square"></i>
 				<a href="#modal1" class="js-modal">modifier</a>
-				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="tittlemodal" style="display: none;">
+				<aside id="modal1" class="modal" role="dialog" style="display: none;">
 					<div class="modal-wrapper js-modal-stop">
 						<div class="modal-supp-gallery">
 							<div class="modal-close-container">
@@ -65,18 +65,26 @@
 							<h3>Ajout photo</h3>
 							<div class="ticket add-photo-ticket">
 								<form action="#" method="post">
+									<div class="container-add-photo">
+										<div id="container-photo"></div>
+										<div><i class="fa-regular fa-image"></i></div>
+										<label for="file">+ Ajouter photo</label>
+										<input type="file" id="file" name="file" accept="image/png, image/jpeg" />
+										<p>jpg, png : 4mo max</p>
+									</div>
 									<label for="title">Titre</label>
 									<input type="text" name="title" id="title">
 									<label for="category">Catégorie</label>
-									<input type="catégorie" name="catégorie" id="catégorie">
+									<select name="category" id="category">
+										<option value=""></option>
+										<option value="Objets">Objets</option>
+										<option value="Appartements">Appartements</option>
+										<option value="Hotels-restaurants">Hotels & restaurants</option>
+									</select>
 									<hr />
-									<input type="submit" value="Envoyer">
+									<input type="submit" value="Valider">
 								</form>
 							</div>
-							
-							<!--<div class="btn-ok-photo">
-								<button>Valider</button>
-							</div> --> 
 						</div>
 					</div>
 				</aside>
