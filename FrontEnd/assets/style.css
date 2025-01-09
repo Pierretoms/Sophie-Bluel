@@ -354,7 +354,11 @@ figure button {
 
 .gallery img {
 	width: 100%;
+	aspect-ratio: 367/489;
+	height: auto;
+	object-fit: cover;
 }
+
 
 .ticket {
 	width: 50%;
