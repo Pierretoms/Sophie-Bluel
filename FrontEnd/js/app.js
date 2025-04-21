@@ -13,8 +13,8 @@ async function loadAllWorks() {
         figure.dataset.categoryId = work.categoryId;
         figure.dataset.projetId = work.id;
         figure.innerHTML = `
-                <img src="${work.imageUrl}" alt="${work.title}"> <!-- Image de l'œuvre -->
-                <figcaption>${work.title}</figcaption> <!-- Titre de l'œuvre -->
+                <img src="${work.imageUrl}" alt="${work.title}">
+                <figcaption>${work.title}</figcaption>
             `;
         gallery.appendChild(figure);
         
@@ -23,10 +23,10 @@ async function loadAllWorks() {
         figureModal.dataset.categoryId = work.categoryId;
         figureModal.dataset.projetId = work.id;
         figureModal.innerHTML = `
-                <img src="${work.imageUrl}" alt="${work.title}"> <!-- Image de l'œuvre -->
-                <figcaption>${work.title}</figcaption> <!-- Titre de l'œuvre -->
+                <img src="${work.imageUrl}" alt="${work.title}">
+                <figcaption>${work.title}</figcaption>
                 <button id="${work.id}" class="supp-projet">
-                    <i class="fa-solid fa-trash-can"></i> <!-- Icône de suppression -->
+                    <i class="fa-solid fa-trash-can"></i>
                 </button>
             `;
         galleryModal.appendChild(figureModal);
@@ -81,14 +81,14 @@ async function createFilterButtons() {
     const filterContainer = document.querySelector(".div-filtres");
     
     // Bouton "Tous"
-    const allButton = document.createElement("div");
+    const allButton = document.createElement("button");
     allButton.textContent = "Tous";
     allButton.addEventListener("click", () => filterWorks(null));
     filterContainer.appendChild(allButton);
     
     // Boutons pour chaque catégorie
     categories.forEach(category => {
-        const button = document.createElement("div");
+        const button = document.createElement("button");
         button.textContent = category.name;
         button.addEventListener("click", () => filterWorks(category.id));
         filterContainer.appendChild(button);
@@ -357,6 +357,11 @@ async function ticketSubmit(event) {
     } else {
         // Si la réponse est valide, traiter les données reçues
         let result = await response.json();
+        const errorCard = document.querySelector('.error-login')
+
+        if (errorCard) {
+            errorCard.remove();
+        }
 
         // Mise à jour de la galerie principale avec la nouvelle œuvre
         const gallery = document.querySelector(".gallery");
